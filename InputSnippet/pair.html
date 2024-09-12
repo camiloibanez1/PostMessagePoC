@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Input Snippet</title>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+  <script>
+    function sendData() {
+          var message = { 
+              text: "post message data from outer frame to the inner frame!",
+          };
+          var frame = document.getElementById("MyTestIFrame")
+          frame.contentWindow.postMessage(message, "https://camiloibanez1.github.io");
+          console.log("outer frame sent data");
+        }
+        
+         window.addEventListener("message", function(event) {
+            console.log("outer frame received data");
+          if (event.origin == "https://camiloibanez1.github.io") {
+            console.log("event", event);
+          }
+        });
+  </script>
+  
+  <div class="postMessageFields">
+    <div class="postMessageField1">
+      <label>Send Data From outer frame to inner frame</label>
+       <button class="build-data-btn" onclick="sendData()">Send test data</button>
+    </div>
+      <div class="postMessageField2">
+      <label>Send Data From inner frame to outer frame</label>
+    <iframe id="MyTestIFrame" src="https://camiloibanez1.github.io/PostMessagePoC/"></iframe>
+  </div>
+  </div>
+</body>
+</html>
