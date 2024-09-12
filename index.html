@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post Message PoC</title>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+  <body>
+    <div class="container">
+      <button onclick="sendData()">Send Message</button>
+    </div>
+  </body>
+  <script>			
+    var outerFrameOrigin = location.ancestorOrigins[0];
+    function sendData() {
+      var message = { 
+          text: "post message data from inner frame to outer frame!",
+      };
+      window.parent.postMessage(message, outerFrameOrigin);
+      console.log("inner iframe sent data");
+    }
+
+    window.addEventListener("message", function(event) {
+      console.log("inner frame received data");
+      if (event.origin == outerFrameOrigin) {
+        console.log("event", event);
+      }
+    });
+  </script>
+</html>
